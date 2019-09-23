@@ -1,0 +1,7 @@
+/.vs
+/packages
+/SimERP.Business/bin/Debug
+/SimERP.Business/obj/Debug
+/SimERP.Data/bin/Debug
+/SimERP.Data/obj/Debug
+/SimERP/ClientApp/package-lock.json
