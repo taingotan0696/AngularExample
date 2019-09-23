@@ -1,0 +1,69 @@
+<section class="form_content">
+    <form [formGroup]="formSearch">
+        <div class="row">
+            <div class="col-sm-4 text-left">
+                <p class="text-uppercase" style="font-size:18px;color: #587792; font-weight:bold; font-family: 'Lato', sans-serif;"><span>THUẾ VAT</span></p>
+            </div>
+            <div class="col-sm-8 text-right">
+                <div class="form-group">
+                    <button type="button" class="btn btn-success btn-sm" (click)="SearchData()">
+            <i class="fab fa-searchengin" ></i> Tìm kiếm
+          </button>&nbsp;
+                    <button type="button" class="btn btn-primary btn-sm" (click)="openDialog()">
+            <i class="fas fa-plus-circle" ></i> Thêm mới
+          </button>&nbsp;
+                    <button type="button" class="btn btn-warning btn-sm">
+            <i class="far fa-file-excel"></i> Xuất Excel
+          </button>&nbsp;
+                </div>
+            </div>
+        </div>
+        <div class="form_subcontent">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <label class="col-md-12 control-label">Tìm kiếm</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="input-group mb-3 input-group-sm">
+                                <input type="text" class="form-control" formControlName='searchString'>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr mdbTableCol *ngFor="let taxElement of taxList; let i = index;">
+                    <td style="width: 5%;">{{i+1}}</td>
+                    <td style="width: 20%;"><a href='javascript:void(0)' (click)="openDialog(taxElement)"> {{taxElement.TaxCode}}</a></td>
+                    <td style="width: 20%;">{{taxElement.TaxName}}</td>
+                    <td style="width: 20%;">{{taxElement.TaxPercent}}</td>
+                    <td style="width: 25%;">{{taxElement.Notes}}</td>
+                    <td style="widows: 20%;">
+                        <input [disabled]="true" type="checkbox" [checked]="taxElement.IsActive">
+                    </td>
+                    <td style="widows: 10%;">
+                        <a href='javascript:void(0)' (click)="openDialog(taxElement)">
+                            <i class="fas fa-edit" style='color:#337ab7'></i>&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href='javascript:void(0)' (click)="Delete(taxElement)">
+                            <i class="far fa-trash-alt " style='color:#337ab7'></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<app-pagination (goPage)="goToPage($event)" (changeLimit)="changeLimit()" (goNext)="onNext() " (goPrev)="onPrev() " [pagesToShow]="5 " [page]="page " [perPage]="limit " [count]="total "></app-pagination>
+<ng4-loading-spinner> </ng4-loading-spinner>

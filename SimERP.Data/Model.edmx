@@ -1,0 +1,455 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="250" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="ModifyBy" Type="int" />
+          <Property Name="ModifyDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="UserTypeID" Type="int" Nullable="false" />
+          <Property Name="LastestLogin" Type="datetimeoffset" Precision="7" />
+          <Property Name="LastestLogout" Type="datetimeoffset" Precision="7" />
+          <Property Name="PasswordExpire" Type="date" />
+          <Property Name="SystemLanguage" Type="varchar" MaxLength="5" />
+          <Property Name="PageDefault" Type="varchar" MaxLength="250" />
+          <Property Name="SignatureImage" Type="varchar" MaxLength="250" />
+          <Property Name="Avatar" Type="varchar" MaxLength="250" />
+          <Property Name="IsAdminCode" Type="bit" Nullable="false" />
+          <Property Name="AdminCode" Type="varchar" MaxLength="50" />
+          <Property Name="IsSecondPassword" Type="bit" Nullable="false" />
+          <Property Name="SecondPassword" Type="varchar" MaxLength="50" />
+          <Property Name="IsSeeAuthorizations" Type="bit" Nullable="false" />
+          <Property Name="IsFirstChangePassword" Type="bit" Nullable="false" />
+          <Property Name="IsSystem" Type="bit" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fiscal">
+          <Key>
+            <PropertyRef Name="FiscalID" />
+          </Key>
+          <Property Name="FiscalID" Type="int" Nullable="false" />
+          <Property Name="FiscalName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="FromDate" Type="date" Nullable="false" />
+          <Property Name="ToDate" Type="date" Nullable="false" />
+          <Property Name="ExpectedClosingDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="RefreshDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="RefreshBy" Type="int" />
+          <Property Name="ClosePriceDate" Type="date" />
+          <Property Name="ClosePriceBy" Type="int" />
+          <Property Name="ClosingDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="ClosingBy" Type="int" />
+          <Property Name="CancelDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="CancelBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="IsClosePrice" Type="bit" Nullable="false" />
+          <Property Name="IsCurrent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="LangID" />
+          </Key>
+          <Property Name="Code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LangID" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Messages" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="OptionSystem">
+          <Key>
+            <PropertyRef Name="OptionID" />
+          </Key>
+          <Property Name="OptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OptionName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OptionType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="StoreID" Type="int" />
+          <Property Name="Value" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="DataType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="RefNo">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="int" Nullable="false" />
+          <Property Name="StoreID" Type="int" Nullable="false" />
+          <Property Name="RefType" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="FormateString" Type="nchar" MaxLength="10" />
+          <Property Name="Length" Type="int" Nullable="false" />
+          <Property Name="rRefType" Type="int" />
+          <Property Name="SqlQueryRefNo" Type="varchar" MaxLength="2000" />
+          <Property Name="SqlQueryRefNoSQL" Type="varchar" MaxLength="2000" />
+          <Property Name="SequenceName" Type="varchar" MaxLength="150" />
+          <Property Name="IsProfixDate" Type="bit" Nullable="false" />
+          <Property Name="IsProfixMontYear" Type="bit" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Tax">
+          <Key>
+            <PropertyRef Name="TaxID" />
+          </Key>
+          <Property Name="TaxID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TaxCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="TaxName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="TaxPercent" Type="numeric" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ModifyBy" Type="int" />
+          <Property Name="ModifyDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="SearchString" Type="varchar" MaxLength="1000" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Name="UnitID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="UnitName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetimeoffset" Precision="7" Nullable="false" />
+          <Property Name="ModifyBy" Type="int" />
+          <Property Name="ModifyDate" Type="datetimeoffset" Precision="7" />
+          <Property Name="SearchString" Type="varchar" MaxLength="2000" />
+          <Property Name="SortOrder" Type="int" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="User" EntityType="Self.User" Schema="acc" store:Type="Tables" />
+          <EntitySet Name="Fiscal" EntityType="Self.Fiscal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OptionSystem" EntityType="Self.OptionSystem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RefNo" EntityType="Self.RefNo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tax" EntityType="Self.Tax" Schema="item" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="item" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FullName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DepartmentID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="ModifyBy" Type="Int32" />
+          <Property Name="ModifyDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="UserTypeID" Type="Int32" Nullable="false" />
+          <Property Name="LastestLogin" Type="DateTimeOffset" Precision="7" />
+          <Property Name="LastestLogout" Type="DateTimeOffset" Precision="7" />
+          <Property Name="PasswordExpire" Type="DateTime" Precision="0" />
+          <Property Name="SystemLanguage" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="PageDefault" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="SignatureImage" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Avatar" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="IsAdminCode" Type="Boolean" Nullable="false" />
+          <Property Name="AdminCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSecondPassword" Type="Boolean" Nullable="false" />
+          <Property Name="SecondPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsSeeAuthorizations" Type="Boolean" Nullable="false" />
+          <Property Name="IsFirstChangePassword" Type="Boolean" Nullable="false" />
+          <Property Name="IsSystem" Type="Boolean" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Code" />
+            <PropertyRef Name="LangID" />
+          </Key>
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LangID" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Messages" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RefNo">
+          <Key>
+            <PropertyRef Name="RowID" />
+          </Key>
+          <Property Name="RowID" Type="Int32" Nullable="false" />
+          <Property Name="StoreID" Type="Int32" Nullable="false" />
+          <Property Name="RefType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FormateString" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="rRefType" Type="Int32" />
+          <Property Name="SqlQueryRefNo" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="SqlQueryRefNoSQL" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="SequenceName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsProfixDate" Type="Boolean" Nullable="false" />
+          <Property Name="IsProfixMontYear" Type="Boolean" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Tax">
+          <Key>
+            <PropertyRef Name="TaxID" />
+          </Key>
+          <Property Name="TaxID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TaxCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TaxName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TaxPercent" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ModifyBy" Type="Int32" />
+          <Property Name="ModifyDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SearchString" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="UnitID" />
+          </Key>
+          <Property Name="UnitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="ModifyBy" Type="Int32" />
+          <Property Name="ModifyDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="SearchString" Type="String" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="RefNoes" EntityType="Self.RefNo" />
+          <EntitySet Name="Taxes" EntityType="Self.Tax" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="Fiscals" EntityType="Model.Fiscal" />
+          <EntitySet Name="OptionSystems" EntityType="Model.OptionSystem" />
+        </EntityContainer>
+        <EntityType Name="Fiscal">
+          <Key>
+            <PropertyRef Name="FiscalID" />
+          </Key>
+          <Property Name="FiscalID" Type="Int32" Nullable="false" />
+          <Property Name="FiscalName" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="FromDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ToDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ExpectedClosingDate" Type="DateTimeOffset" Nullable="false" Precision="7" />
+          <Property Name="RefreshDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="RefreshBy" Type="Int32" />
+          <Property Name="ClosePriceDate" Type="DateTime" Precision="0" />
+          <Property Name="ClosePriceBy" Type="Int32" />
+          <Property Name="ClosingDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="ClosingBy" Type="Int32" />
+          <Property Name="CancelDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="CancelBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTimeOffset" Precision="7" />
+          <Property Name="Notes" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="IsClosePrice" Type="Boolean" Nullable="false" />
+          <Property Name="IsCurrent" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OptionSystem">
+          <Key>
+            <PropertyRef Name="OptionID" />
+          </Key>
+          <Property Name="OptionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OptionName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OptionType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StoreID" Type="Int32" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DataType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserCode" ColumnName="UserCode" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="LastestLogin" ColumnName="LastestLogin" />
+                <ScalarProperty Name="LastestLogout" ColumnName="LastestLogout" />
+                <ScalarProperty Name="PasswordExpire" ColumnName="PasswordExpire" />
+                <ScalarProperty Name="SystemLanguage" ColumnName="SystemLanguage" />
+                <ScalarProperty Name="PageDefault" ColumnName="PageDefault" />
+                <ScalarProperty Name="SignatureImage" ColumnName="SignatureImage" />
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="IsAdminCode" ColumnName="IsAdminCode" />
+                <ScalarProperty Name="AdminCode" ColumnName="AdminCode" />
+                <ScalarProperty Name="IsSecondPassword" ColumnName="IsSecondPassword" />
+                <ScalarProperty Name="SecondPassword" ColumnName="SecondPassword" />
+                <ScalarProperty Name="IsSeeAuthorizations" ColumnName="IsSeeAuthorizations" />
+                <ScalarProperty Name="IsFirstChangePassword" ColumnName="IsFirstChangePassword" />
+                <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="Model.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="LangID" ColumnName="LangID" />
+                <ScalarProperty Name="Messages" ColumnName="Messages" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RefNoes">
+            <EntityTypeMapping TypeName="Model.RefNo">
+              <MappingFragment StoreEntitySet="RefNo">
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="RefType" ColumnName="RefType" />
+                <ScalarProperty Name="FormateString" ColumnName="FormateString" />
+                <ScalarProperty Name="Length" ColumnName="Length" />
+                <ScalarProperty Name="rRefType" ColumnName="rRefType" />
+                <ScalarProperty Name="SqlQueryRefNo" ColumnName="SqlQueryRefNo" />
+                <ScalarProperty Name="SqlQueryRefNoSQL" ColumnName="SqlQueryRefNoSQL" />
+                <ScalarProperty Name="SequenceName" ColumnName="SequenceName" />
+                <ScalarProperty Name="IsProfixDate" ColumnName="IsProfixDate" />
+                <ScalarProperty Name="IsProfixMontYear" ColumnName="IsProfixMontYear" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Taxes">
+            <EntityTypeMapping TypeName="Model.Tax">
+              <MappingFragment StoreEntitySet="Tax">
+                <ScalarProperty Name="TaxID" ColumnName="TaxID" />
+                <ScalarProperty Name="TaxCode" ColumnName="TaxCode" />
+                <ScalarProperty Name="TaxName" ColumnName="TaxName" />
+                <ScalarProperty Name="TaxPercent" ColumnName="TaxPercent" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SearchString" ColumnName="SearchString" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="Model.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="UnitCode" ColumnName="UnitCode" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="ModifyBy" ColumnName="ModifyBy" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="SearchString" ColumnName="SearchString" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fiscals">
+            <EntityTypeMapping TypeName="Model.Fiscal">
+              <MappingFragment StoreEntitySet="Fiscal">
+                <ScalarProperty Name="IsCurrent" ColumnName="IsCurrent" />
+                <ScalarProperty Name="IsClosePrice" ColumnName="IsClosePrice" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CancelBy" ColumnName="CancelBy" />
+                <ScalarProperty Name="CancelDate" ColumnName="CancelDate" />
+                <ScalarProperty Name="ClosingBy" ColumnName="ClosingBy" />
+                <ScalarProperty Name="ClosingDate" ColumnName="ClosingDate" />
+                <ScalarProperty Name="ClosePriceBy" ColumnName="ClosePriceBy" />
+                <ScalarProperty Name="ClosePriceDate" ColumnName="ClosePriceDate" />
+                <ScalarProperty Name="RefreshBy" ColumnName="RefreshBy" />
+                <ScalarProperty Name="RefreshDate" ColumnName="RefreshDate" />
+                <ScalarProperty Name="ExpectedClosingDate" ColumnName="ExpectedClosingDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="FiscalName" ColumnName="FiscalName" />
+                <ScalarProperty Name="FiscalID" ColumnName="FiscalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OptionSystems">
+            <EntityTypeMapping TypeName="Model.OptionSystem">
+              <MappingFragment StoreEntitySet="OptionSystem">
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="DataType" ColumnName="DataType" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="StoreID" ColumnName="StoreID" />
+                <ScalarProperty Name="OptionType" ColumnName="OptionType" />
+                <ScalarProperty Name="OptionName" ColumnName="OptionName" />
+                <ScalarProperty Name="OptionID" ColumnName="OptionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
