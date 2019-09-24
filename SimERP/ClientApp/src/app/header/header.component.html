@@ -1,7 +1,8 @@
 <nav id="main-nav">
     <!-- Sample menu definition -->
     <ul id="main-menu" class="sm sm-blue">
-        <li><a style="color: white;"><i class="fa fa-home"></i> Trang chủ</a></li>
+        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a style="color: white;" [routerLink]='["/"]' [routerLinkActive]='[""]'><i class="fa fa-home"></i> Trang chủ</a></li>
         <li>
             <a style="color: white;"><i class="fa fa-cart-plus"></i> Mua hàng</a>
             <ul>
@@ -83,7 +84,7 @@
         </li>
 
         <li>
-            <a style="color: white;"><i class="fa fa-area-chart"></i> Báo cáo</a>
+            <a style="color: white;"><i class="fas fa-chart-area"></i> Báo cáo</a>
             <ul>
                 <li>
                     <a>Bán hàng</a>

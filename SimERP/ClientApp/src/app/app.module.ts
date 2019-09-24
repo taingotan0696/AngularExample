@@ -19,6 +19,7 @@ import { TaxinfoComponent } from './lists/taxcomponent/taxinfo/taxinfo.component
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { PurchasemanagementComponent } from './vouchers/purchase/purchasemanagement/purchasemanagement.component';
 import { PurchasedetailinfoComponent } from './vouchers/purchase/purchasedetailinfo/purchasedetailinfo.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,8 @@ import { PurchasedetailinfoComponent } from './vouchers/purchase/purchasedetaili
     PaginationComponent,
     TaxinfoComponent,
     PurchasemanagementComponent,
-    PurchasedetailinfoComponent
+    PurchasedetailinfoComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -39,7 +41,7 @@ import { PurchasedetailinfoComponent } from './vouchers/purchase/purchasedetaili
     FormsModule,
     AngularMaterialModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: DashboardComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'tax', component: TaxComponent },
