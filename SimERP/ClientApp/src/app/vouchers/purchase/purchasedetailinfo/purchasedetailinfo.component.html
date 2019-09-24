@@ -1,12 +1,12 @@
 <section class="form_content">
-    <form>
+    <form (ngSubmit)="submitData()">
         <div class="row">
             <div class="col-sm-4 text-left">
                 <p class="text-uppercase" style="font-size:18px;color: #587792; font-weight:bold; font-family: 'Lato', sans-serif;"><span>HÓA ĐƠN MUA HÀNG</span></p>
             </div>
             <div class="col-sm-8 text-right">
                 <div class="form-group">
-                    <button type="button" class="btn btn-success btn-sm" style="background-color: #5cb85c; border-color: #4cae4c">
+                    <button type="submit" class="btn btn-success btn-sm" style="background-color: #5cb85c; border-color: #4cae4c">
                         <i class="far fa-save"></i> Lưu (F3)
                     </button>&nbsp;
                     <button type="button" class="btn btn-success btn-sm" style="background-color: #5cb85c; border-color: #4cae4c">
@@ -186,27 +186,31 @@
                                         <!-- Table head -->
                                         <!-- Table body -->
                                         <tbody>
-                                            <tr>
+                                            <tr *ngIf="lst_Merchandise.length <= 0">
                                                 <td colspan="14" class="text-center">Dữ liệu không tồn tại</td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="14" class="text-left lbadd"><a>Thêm (F12)</a> | <a>Thêm nhiều</a></td>
-                                            </tr>
-
-                                            <!-- <tr>
-                                                <td>1</td>
-                                                <td>EX/00243/0919</td>
-                                                <td>16/09/2019</td>
-                                                <td>16/09/2019</td>
-                                                <td>100000211</td>
-                                                <td class="text-left">BÙI THỊ THANH HIỀN</td>
-                                                <td>Quản trị hệ thống</td>
-                                                <td class="text-right">1.530.000</td>
+                                            <tr *ngFor="let row of lst_Merchandise; let i = index">
+                                                <th>{{i + 1}}</th>
+                                                <td><input type="text" [(ngModel)]="row.Name" name="Name{{i}}" class="form-control form-control-sm" value="{{row.Code}}"></td>
+                                                <td>{{row.Name}}</td>
+                                                <td>{{row.Unit}}</td>
+                                                <td>{{row.Amount}}</td>
+                                                <td>{{row.Price}}</td>
+                                                <td>{{row.Money}}</td>
+                                                <td>{{row.Promotion}}</td>
+                                                <td>{{row.VAT}}</td>
+                                                <td>{{row.TotalMoney}}</td>
+                                                <td>{{row.QD_HSD}}</td>
+                                                <td>{{row.ExpiryDate | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+                                                <td>{{row.TotalMoney}}</td>
                                                 <td>
                                                     <a id="edit_exp"><i class="fas fa-edit" style='color:#337ab7' data-toggle="modal" data-target="#exampleModalCenter"></i></a>&nbsp;&nbsp;&nbsp;
-                                                    <i class="far fa-trash-alt" style='color:#337ab7'></i>
+                                                    <a (click)="deleteRowGird_hanghoa(i)"><i class="far fa-trash-alt" style='color:#337ab7'></i></a>
                                                 </td>
-                                            </tr> -->
+                                            </tr>
+                                            <tr>
+                                                <td colspan="14" class="text-left lbadd"><a (click)="addRowGird_HangHoa()">Thêm (F12)</a> | <a data-toggle="modal" data-target="#myModal">Thêm nhiều</a></td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -244,20 +248,6 @@
                                             <tr>
                                                 <td colspan="10" class="text-center">Dữ liệu không tồn tại</td>
                                             </tr>
-                                            <!-- <tr>
-                                                    <td>1</td>
-                                                    <td>EX/00243/0919</td>
-                                                    <td>16/09/2019</td>
-                                                    <td>16/09/2019</td>
-                                                    <td>100000211</td>
-                                                    <td class="text-left">BÙI THỊ THANH HIỀN</td>
-                                                    <td>Quản trị hệ thống</td>
-                                                    <td class="text-right">1.530.000</td>
-                                                    <td>
-                                                        <a id="edit_exp"><i class="fas fa-edit" style='color:#337ab7' data-toggle="modal" data-target="#exampleModalCenter"></i></a>&nbsp;&nbsp;&nbsp;
-                                                        <i class="far fa-trash-alt" style='color:#337ab7'></i>
-                                                    </td>
-                                                </tr> -->
                                         </tbody>
                                     </table>
                                 </div>
@@ -331,4 +321,82 @@
             </div>
         </div>
     </form>
+    <!-- The Modal -->
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Tìm kiếm hàng hóa</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <label class="col-sm-2 control-label text-right">Tìm kiếm</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+                            </div>
+                            <label class="col-sm-2 control-label text-right">Nhóm hàng hóa</label>
+                            <div class="col-sm-3">
+                                <select class="browser-default form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+                                    <option value="1" selected>--Tất cả--</option>
+                                    <option value="2">Ngân hàng</option>
+                                    <option value="2">Thu khám đoàn</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-2">
+                                <button type="button" class="btn btn-success btn-sm" style="background-color: #5bc0de; border-color: #46b8da;">
+                                    <i class="fas fa-search"></i> Tìm
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <br>
+                            <div class="row table-responsive">
+                                <!-- Table  -->
+                                <table class="table table-bordered table-striped table-hover">
+                                    <!-- Table head -->
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Mã</th>
+                                            <th>Tên hàng</th>
+                                            <th>Đơn vị tính</th>
+                                        </tr>
+
+                                    </thead>
+                                    <!-- Table head -->
+                                    <!-- Table body -->
+                                    <tbody>
+                                        <tr>
+                                            <td></td>
+                                            <td>COS-0001</td>
+                                            <td>Bepanthen balm</td>
+                                            <td>Tuýp</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>COS-0001</td>
+                                            <td>Bepanthen balm</td>
+                                            <td>Tuýp</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </section>
