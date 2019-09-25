@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Microsoft.EntityFrameworkCore;
 using SimERP.Data;
+using SimERP.Data.DBEntities;
 
 namespace SimERP.Business
 {
@@ -57,11 +59,11 @@ namespace SimERP.Business
                                 this.AddMessage("000004", "Mã code đã tồn tại, vui lòng chọn mã khác!");
                                 return false;
                             }
-                            db.Taxes.Add(tax);
+                            db.Tax.Add(tax);
                         }
                         else
                         {
-                            db.Entry(tax).State = System.Data.Entity.EntityState.Modified;
+                            db.Entry(tax).State = EntityState.Modified;
                         }
                         db.SaveChanges();
                         return true;
@@ -81,7 +83,7 @@ namespace SimERP.Business
                     using (var db = new DBEntities())
                     {
                         //TODO LIST: Kiểm tra sử dụng trước khi xóa
-                        db.Taxes.Remove(db.Taxes.Find(id));
+                        db.Tax.Remove(db.Tax.Find(id));
                         db.SaveChanges();
                         return true;
                     }
@@ -103,7 +105,7 @@ namespace SimERP.Business
                     using (var db = new DBEntities())
                     {
                         int count = 0;
-                        count = db.Units.Where(m => m.UnitCode == unitCode).Count();
+                        count = db.Tax.Where(m => m.TaxCode == unitCode).Count();
                         if (count > 0)
                             return true;
                         return false;

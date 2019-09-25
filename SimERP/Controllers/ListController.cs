@@ -10,7 +10,6 @@ using SimERP.Business.Models;
 using SimERP.Business.Models.MasterData.ListDTO;
 using SimERP.Business.Models.RequestData;
 using SimERP.Business.Utils;
-using Tax = SimERP.Data.Tax;
 
 namespace SimERP.Controllers
 {
@@ -19,6 +18,7 @@ namespace SimERP.Controllers
     {
         #region Variables
         ITax taxBO;
+        IUnit unitBO;
         #endregion
 
         #region Contructor
@@ -26,6 +26,7 @@ namespace SimERP.Controllers
         {
             this.ControllerName = "List";
             this.taxBO = this.taxBO ?? new TaxBO();
+            this.unitBO = this.unitBO ?? new UnitBO();
         }
         #endregion
 
@@ -112,6 +113,65 @@ namespace SimERP.Controllers
                 return responeResult;
             }
         }
+        #endregion
+
+        #region Unint 
+
+        [HttpPost("[action]")]
+        [Route("api/list/unit")]
+        public ResponeResult GetUnitData([FromBody]TaxSearchParams objUnitSearchParams)
+        {
+            try
+            { //Check security & data request
+                var repData = this.CheckSign(objUnitSearchParams.authenParams, objUnitSearchParams.authenParams.ClientUserName, objUnitSearchParams.authenParams.ClientPassword, objUnitSearchParams.authenParams.Sign);
+                if (repData == null || !repData.IsOk)
+                    return repData;
+                var dataResult = unitBO.GetData(ReplaceUnicode(objUnitSearchParams.searchString), objUnitSearchParams.startRow, objUnitSearchParams.maxRow);
+                if (dataResult != null)
+                {
+                    repData.RepData = dataResult;
+                    repData.TotalRow = this.unitBO.TotalRows;
+                }
+                else
+                    this.AddResponeError(ref repData, unitBO.getMsgCode(), unitBO.GetMessage(this.unitBO.getMsgCode(), this.LangID));
+
+                return repData;
+            }
+            catch (Exception ex)
+            {
+                this.responeResult = this.CreateResponeResultError(MsgCodeConst.Msg_RequestDataInvalid, MsgCodeConst.Msg_RequestDataInvalidText, ex.Message, null);
+                Logger.Error("EXCEPTION-CALL API", ex);
+                return responeResult;
+            }
+        }
+
+        [HttpPost]
+        [Route("api/list/deleteunit")]
+        public ActionResult<ResponeResult> DeleteUnit([FromBody]DelTaxParams delunitParams)
+        {
+            try
+            {
+                //Check security & data request
+                var repData = this.CheckSign(delunitParams.authenParams, delunitParams.authenParams.ClientUserName, delunitParams.authenParams.ClientPassword, delunitParams.authenParams.Sign);
+                if (repData == null || !repData.IsOk)
+                    return repData;
+
+                var dataResult = unitBO.DeleteUnit(delunitParams.id);
+                if (dataResult)
+                    repData.RepData = dataResult;
+                else
+                    this.AddResponeError(ref repData, unitBO.getMsgCode(), unitBO.GetMessage(this.unitBO.getMsgCode(), this.LangID));
+
+                return repData;
+            }
+            catch (Exception ex)
+            {
+                this.responeResult = this.CreateResponeResultError(MsgCodeConst.Msg_RequestDataInvalid, MsgCodeConst.Msg_RequestDataInvalidText, ex.Message, null);
+                Logger.Error("EXCEPTION-CALL API", ex);
+                return responeResult;
+            }
+        }
+
         #endregion
     }
 }

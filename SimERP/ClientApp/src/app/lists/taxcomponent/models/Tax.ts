@@ -8,7 +8,7 @@ export class Tax {
     SearchString: string;
     SortOrder?: number;
     TaxCode: string;
-    TaxID: number;
+    TaxId: number;
     TaxName: string;
     TaxPercent: number;
     UserName: string;

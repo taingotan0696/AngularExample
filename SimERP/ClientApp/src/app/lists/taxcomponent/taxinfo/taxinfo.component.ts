@@ -24,6 +24,7 @@ export class TaxinfoComponent implements OnInit {
       TaxName: new FormControl('', [Validators.required, Validators.maxLength(125)]),
       TaxPercent: new FormControl(0, [Validators.required, Validators.maxLength(50)]),
       Notes: new FormControl(''),
+      TaxId: new FormControl(0), // default value
       IsActive: new FormControl(true),
     });
 
@@ -44,18 +45,18 @@ export class TaxinfoComponent implements OnInit {
 
   // xử lý lưu dữ liệu
   saveData(isContinue: boolean) {
-    console.log(this.taxForm.getRawValue());
     const isNew = this.isAddState;
-    console.log(this.taxForm.value);
-    this.tax = Object.assign({}, this.taxForm.value);
+    this.tax = Object.assign({}, this.taxForm.getRawValue());
+    console.log(this.tax);
     if (this.tax != undefined) {
       this.taxService.SaveTax(this.tax, isNew).subscribe(res => {
         if (res != undefined) {
           if (res.IsOk) {
             alert(this.getActionText() + ' thành công');
             if (isContinue) {
-              this.taxForm.reset();
               this.isAddState = true;
+              this.taxForm.get('TaxCode').enable();
+              this.taxForm.reset();
             } else {
               this.activeModal.close(true);
             }

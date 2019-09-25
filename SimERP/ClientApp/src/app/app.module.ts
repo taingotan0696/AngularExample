@@ -19,7 +19,11 @@ import { TaxinfoComponent } from './lists/taxcomponent/taxinfo/taxinfo.component
 import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { PurchasemanagementComponent } from './vouchers/purchase/purchasemanagement/purchasemanagement.component';
 import { PurchasedetailinfoComponent } from './vouchers/purchase/purchasedetailinfo/purchasedetailinfo.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { UnitComponent } from './lists/unitcomponent/unit/unit.component';
+import { ComfirmDialogComponent } from './common/comfirm-dialog/comfirm-dialog.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,18 +37,22 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     TaxinfoComponent,
     PurchasemanagementComponent,
     PurchasedetailinfoComponent,
-    DashboardComponent
+    UnitComponent,
+    ComfirmDialogComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
     AngularMaterialModule,
+    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
     RouterModule.forRoot([
-      { path: '', component: DashboardComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'tax', component: TaxComponent },
+      { path: 'unit', component: UnitComponent },
       { path: 'purchase', component: PurchasemanagementComponent },
       {
         path: 'purchaseinvoice',
@@ -66,6 +74,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
   entryComponents:
     [
       TaxinfoComponent,
+      ComfirmDialogComponent,
     ],
 
 })

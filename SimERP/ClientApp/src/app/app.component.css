@@ -51,25 +51,6 @@ body {
     opacity: 0.8;
 }
 
-.main_header {
-    width: 100%;
-    z-index: 999;
-    position: fixed;
-    top: 0px;
-}
-
-.container {
-    z-index: 1;
-    width: 100%;
-    background-color: transparent;
-    padding-right: 0px;
-}
-
-.supperbody {
-    margin-top: 5%;
-    position: relative;
-}
-
 svg.material-icons {
     height: 24px;
     width: auto;

@@ -32,10 +32,12 @@ export class TaxService {
   }
 
   DeleteTax(tax: Tax) {
+    console.log(tax);
     const headers = new HttpHeaders().set('content-type', 'application/json');
     this.delTaxParams.authenParams = this.authenParams;
-    this.delTaxParams.id = tax.TaxID;
+    this.delTaxParams.id = tax.TaxId;
     const jsonString = JSON.stringify(this.delTaxParams);
+    console.log(jsonString);
     return this.httpClient.post<ResponeResult>('https://localhost:44335/api/list/deletetax', jsonString, { headers });
   }
 

@@ -41,5 +41,5 @@ fieldset[disabled] {
     color: #9C9A9A;
     background-color: transparent;
     border-bottom-color: #F1F1F1;
-    cursor: not-allowed;
+    /* cursor: not-allowed; */
 }

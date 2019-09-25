@@ -7,7 +7,8 @@ using SimERP.Business.Models.RequestData;
 
 namespace SimERP.Business.Models.MasterData.ListDTO
 {
-    public class Tax : SimERP.Data.Tax
+    #region Tax
+    public class Tax : Data.DBEntities.Tax
     {
         public string UserName { get; set; }
     }
@@ -35,4 +36,10 @@ namespace SimERP.Business.Models.MasterData.ListDTO
         public bool isNew { get; set; }
 
     }
+
+    #endregion
+
+    #region Unit
+   
+    #endregion
 }

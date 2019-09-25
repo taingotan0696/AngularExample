@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Text.RegularExpressions;
-//using MicroOrm.Pocos.SqlGenerator;
 using Dapper;
-using System.Data;
+using Microsoft.EntityFrameworkCore;
+using SimERP.Data.DBEntities;
 
 namespace SimERP.Data
 {
     public class Repository<T> : IRepository<T> where T : class, new()
     {
         #region Variables
-            string MsgCode, MsgMessage, MsgErrorCode;
-            protected ConnectionFactory IConnect;
+        string MsgCode, MsgMessage, MsgErrorCode;
+        protected ConnectionFactory IConnect;
         #endregion
 
         #region Constructors
@@ -46,7 +44,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     List<T> list;
                     IQueryable<T> dbQuery = db.Set<T>();
@@ -71,7 +69,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     List<T> list;
                     IQueryable<T> dbQuery = db.Set<T>();
@@ -102,7 +100,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     List<T> list;
                     IQueryable<T> dbQuery = db.Set<T>();
@@ -126,32 +124,33 @@ namespace SimERP.Data
         }
         public IList<T> RunFullTextContainsQuery(Expression<Func<T, object>> property, string search)
         {
-            using (var db = new DBEntities())
-            {
-                if (string.IsNullOrWhiteSpace(search))
-                {
-                    return Enumerable.Empty<T>().ToList();
-                }
+            //using (var db = new DBEntities())
+            //{
+            //    if (string.IsNullOrWhiteSpace(search))
+            //    {
+            //        return Enumerable.Empty<T>().ToList();
+            //    }
 
-                var unaryExpression = property.Body as UnaryExpression;
+            //    var unaryExpression = property.Body as UnaryExpression;
 
-                var memberExpression = property.Body as MemberExpression ?? (unaryExpression != null ? unaryExpression.Operand as MemberExpression : null);
+            //    var memberExpression = property.Body as MemberExpression ?? (unaryExpression != null ? unaryExpression.Operand as MemberExpression : null);
 
-                if (memberExpression == null)
-                {
-                    throw new Exception(string.Format("Invalid lambda expression: '{0}'.", property));
-                }
+            //    if (memberExpression == null)
+            //    {
+            //        throw new Exception(string.Format("Invalid lambda expression: '{0}'.", property));
+            //    }
 
-                var query = string.Format("SELECT * FROM {0} WHERE freetext( ({1}), @search)", GetTableName(), memberExpression.Member.Name);
+            //    var query = string.Format("SELECT * FROM {0} WHERE freetext( ({1}), @search)", GetTableName(), memberExpression.Member.Name);
 
-                return db.Database.SqlQuery<T>(query, new SqlParameter("@search", search)).ToList();
-            }
+            //    return db.Database.SqlQuery<T>(query, new SqlParameter("@search", search)).ToList();
+            //}
+            return null;
         }
         public IList<T> GetList(int startRow, int maxRow, Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     List<T> list;
                     IQueryable<T> dbQuery = db.Set<T>();
@@ -183,7 +182,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     T item = null;
                     IQueryable<T> dbQuery = db.Set<T>();
@@ -213,7 +212,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     return db.Set<T>().Find(ID);
                 }
@@ -232,9 +231,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    return db.Messages.Find(Code, Lang).Messages;
+                    return db.Message.Find(Code, Lang).Messages;
                 }
             }
             catch
@@ -250,9 +249,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    return db.Messages.Find(MsgCode).Messages;
+                    return db.Message.Find(MsgCode).Messages;
                 }
             }
             catch
@@ -296,9 +295,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    db.Entry(item).State = System.Data.Entity.EntityState.Added;
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                     db.SaveChanges();
                     return true;
                 }
@@ -318,11 +317,11 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     foreach (T item in items)
                     {
-                        db.Entry(item).State = System.Data.Entity.EntityState.Added;
+                        db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Added;
                     }
                     db.SaveChanges();
                     return true;
@@ -344,10 +343,10 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    DbSet dbSet = db.Set<T>();
-                    db.Entry(item).State = EntityState.Modified;
+                    Microsoft.EntityFrameworkCore.DbSet<T> dbSet = db.Set<T>();
+                    db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
                     return true;
                 }
@@ -367,11 +366,11 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     foreach (T item in items)
                     {
-                        db.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                        db.Entry(item).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     }
                     db.SaveChanges();
                     return true;
@@ -392,7 +391,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     DbSet<T> dbSet;
                     dbSet = db.Set<T>();
@@ -437,7 +436,7 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
                     DbSet<T> dbSet;
                     dbSet = db.Set<T>();
@@ -473,9 +472,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var select = from c in db.Fiscals
+                    var select = from c in db.Fiscal
                                  where c.IsCurrent == true
                                  select c;
                     return select.FirstOrDefault();
@@ -488,25 +487,26 @@ namespace SimERP.Data
         }
         public decimal GetCurrentBalanceAmount(int storeID, Guid objID, int objType)
         {
-            try
-            {
-                using (var db = new DBEntities())
-                {
-                    string sqlWhere = "Where l.StoreID=@StoreID AND l.ObjectID=@ObjectID AND l.ObjectType=@ObjectType";
-                    DynamicParameters param = new DynamicParameters();
-                    param.Add("StoreID", storeID);
-                    param.Add("ObjectID", objID);
-                    param.Add("ObjectType", objType);
+            //try
+            //{
+            //    using (var db = new DBEntities())
+            //    {
+            //        string sqlWhere = "Where l.StoreID=@StoreID AND l.ObjectID=@ObjectID AND l.ObjectType=@ObjectType";
+            //        DynamicParameters param = new DynamicParameters();
+            //        param.Add("StoreID", storeID);
+            //        param.Add("ObjectID", objID);
+            //        param.Add("ObjectType", objType);
 
-                    string sqlQuery = @"SELECT TOP(1) ISNULL(l.BalanceAmount, 0) as BalanceAmount
-                                            FROM ledger.ARLedger l WITH(NOLOCK) " + sqlWhere + " ORDER BY l.AccountingDate DESC, l.SortNumber DESC";
-                    return db.Database.Connection.Query<long>(sqlQuery, param).FirstOrDefault();
-                }
-            }
-            catch
-            {
-                return 0;
-            }
+            //        string sqlQuery = @"SELECT TOP(1) ISNULL(l.BalanceAmount, 0) as BalanceAmount
+            //                                FROM ledger.ARLedger l WITH(NOLOCK) " + sqlWhere + " ORDER BY l.AccountingDate DESC, l.SortNumber DESC";
+            //        return db.Database.Connection.Query<long>(sqlQuery, param).FirstOrDefault();
+            //    }
+            //}
+            //catch
+            //{
+            //    return 0;
+            //}
+            return 0;
         }
         public string GetStoreList(List<string> storeList)
         {
@@ -538,9 +538,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var select = from c in db.OptionSystems
+                    var select = from c in db.OptionSystem
                                  where c.OptionName == OptionID
                                  select c;
                     return select.First().Value;
@@ -555,10 +555,10 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var select = from c in db.OptionSystems
-                                 where c.StoreID == storeID && c.OptionName == OptionID
+                    var select = from c in db.OptionSystem
+                                 where c.StoreId == storeID && c.OptionName == OptionID
                                  select c;
                     return select.First().Value;
                 }
@@ -572,9 +572,9 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var select = from c in db.OptionSystems
+                    var select = from c in db.OptionSystem
                                  where c.OptionName == OptionID
                                  select c;
                     return select.First().Value == "1" ? true : false;
@@ -589,10 +589,10 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var select = from c in db.OptionSystems
-                                 where c.StoreID == storeID && c.OptionName == OptionID
+                    var select = from c in db.OptionSystem
+                                 where c.StoreId == storeID && c.OptionName == OptionID
                                  select c;
                     return select.First().Value == "1" ? true : false;
                 }
@@ -711,10 +711,10 @@ namespace SimERP.Data
         {
             try
             {
-                using (var db = new DBEntities())
+                using (var db = new DBEntities.DBEntities())
                 {
-                    var rowRefNo = (from c in db.RefNoes
-                                    where c.StoreID == storeID && c.RefType == refType
+                    var rowRefNo = (from c in db.RefNo
+                                    where c.StoreId == storeID && c.RefType == refType
                                     select c).FirstOrDefault();
                     return rowRefNo;
                 }
@@ -726,29 +726,30 @@ namespace SimERP.Data
         }
         private long GetCurrentNumber(int storeID, string sqlQuery, DateTime voucherDate)
         {
-            try
-            {
-                using (var db = new DBEntities())
-                {
-                    long currNumber;
-                    if (storeID != -1)
-                    {
-                        DynamicParameters param = new DynamicParameters();
-                        param.Add("StoreID", storeID);
-                        param.Add("VoucherDate", voucherDate);
-                        currNumber = db.Database.Connection.Query<long>(sqlQuery, param).FirstOrDefault();
-                    }
-                    else
-                    {
-                        currNumber = db.Database.Connection.Query<long>(sqlQuery).FirstOrDefault();
-                    }
-                    return currNumber + 1;
-                }
-            }
-            catch
-            {
-                return -1;
-            }
+            //try
+            //{
+            //    using (var db = new DBEntities())
+            //    {
+            //        long currNumber;
+            //        if (storeID != -1)
+            //        {
+            //            DynamicParameters param = new DynamicParameters();
+            //            param.Add("StoreID", storeID);
+            //            param.Add("VoucherDate", voucherDate);
+            //            currNumber = db.Database.Connection.Query<long>(sqlQuery, param).FirstOrDefault();
+            //        }
+            //        else
+            //        {
+            //            currNumber = db.Database.Connection.Query<long>(sqlQuery).FirstOrDefault();
+            //        }
+            //        return currNumber + 1;
+            //    }
+            //}
+            //catch
+            //{
+            //    return -1;
+            //}
+            return -1;
         }
         private string LeadingZeros(long currNumber, int length)
         {
@@ -782,14 +783,15 @@ namespace SimERP.Data
         }
         private decimal GetNextSequenceRefNo(string sequenceName)
         {
-            using (var db = new DBEntities())
-            {
-                string sqlQuery = @"SELECT next VALUE FOR " + sequenceName;
-                var nextSequenceRefNo = db.Database.Connection.Query<decimal>(sqlQuery).First();
-                if (nextSequenceRefNo == 0)
-                    nextSequenceRefNo = 1;
-                return nextSequenceRefNo;
-            }
+            //using (var db = new DBEntities())
+            //{
+            //    string sqlQuery = @"SELECT next VALUE FOR " + sequenceName;
+            //    var nextSequenceRefNo = db.Database.Connection.Query<decimal>(sqlQuery).First();
+            //    if (nextSequenceRefNo == 0)
+            //        nextSequenceRefNo = 1;
+            //    return nextSequenceRefNo;
+            //}
+            return -1;
         }
         #endregion
 
@@ -798,26 +800,27 @@ namespace SimERP.Data
         public string LangID { get; set; }
         public string GetFullNameByUserID(Guid userID)
         {
-            try
-            {
-                using (var db = new DBEntities())
-                {
-                    DynamicParameters param = new DynamicParameters();
-                    param.Add("UserID", userID);
-                    param.Add("LanguageID", this.LangID);
+            //try
+            //{
+            //    using (var db = new DBEntities())
+            //    {
+            //        DynamicParameters param = new DynamicParameters();
+            //        param.Add("UserID", userID);
+            //        param.Add("LanguageID", this.LangID);
 
-                    string sqlQuery = @"select l.FullName
-                                        from acc.[UserProfile] p with(nolock)
-	                                            left join acc.UserProfileLang l with(nolock) on l.ProfileID=p.ProfileID
-                                        where p.UserID = @UserID and l.LanguageID = @LanguageID";
+            //        string sqlQuery = @"select l.FullName
+            //                            from acc.[UserProfile] p with(nolock)
+	           //                                 left join acc.UserProfileLang l with(nolock) on l.ProfileID=p.ProfileID
+            //                            where p.UserID = @UserID and l.LanguageID = @LanguageID";
 
-                    return db.Database.Connection.Query<string>(sqlQuery, param).First();
-                }
-            }
-            catch
-            {
-                throw;
-            }
+            //        return db.Database.Connection.Query<string>(sqlQuery, param).First();
+            //    }
+            //}
+            //catch
+            //{
+            //    throw;
+            //}
+            return string.Empty;
         }
         //public  GetUserByID(Guid userID)
         //{
@@ -848,15 +851,16 @@ namespace SimERP.Data
         #region Private 
         private string GetTableName()
         {
-            using (var db = new DBEntities())
-            {
-                var objectContext = ((IObjectContextAdapter)db).ObjectContext;
-                var sql = objectContext.CreateObjectSet<T>().ToTraceString();
-                var regex = new Regex(@"FROM\s+(?<table>.+)\s+AS");
-                var match = regex.Match(sql);
+            //using (var db = new DBEntities())
+            //{
+            //    var objectContext = ((IObjectContextAdapter)db).ObjectContext;
+            //    var sql = objectContext.CreateObjectSet<T>().ToTraceString();
+            //    var regex = new Regex(@"FROM\s+(?<table>.+)\s+AS");
+            //    var match = regex.Match(sql);
 
-                return match.Groups["table"].Value;
-            }
+            //    return match.Groups["table"].Value;
+            //}
+            return "TableName";
         }
         #endregion
     }

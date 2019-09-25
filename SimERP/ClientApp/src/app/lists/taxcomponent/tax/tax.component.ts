@@ -6,6 +6,7 @@ import { PaginationComponent } from 'src/app/pagination/pagination.component';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { TaxinfoComponent } from '../taxinfo/taxinfo.component';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { DelTaxParams } from '../models/DelTaxParams';
 
 @Component({
   selector: 'app-stock',
@@ -93,7 +94,6 @@ export class TaxComponent implements OnInit, AfterViewInit {
     );
   }
   Delete(taxData) {
-    console.log(taxData);
     if (confirm('Bạn có chắc chắn muốn xoá dữ liệu đang chọn?')) {
       this.stockService.DeleteTax(taxData).subscribe(res => {
         if (res !== undefined) {
@@ -101,6 +101,7 @@ export class TaxComponent implements OnInit, AfterViewInit {
             alert(res.MessageText);
           } else {
             alert('Xoá thành công!');
+            this.SearchData();
           }
         } else {
           alert('Lỗi xoá thông tin');
