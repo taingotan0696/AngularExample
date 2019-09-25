@@ -1,0 +1,68 @@
+<section class="form_content">
+  <form>
+    <div class="row">
+      <div class="col-sm-4 text-left">
+        <p class="text-uppercase" style="font-size:18px;color: #587792; font-weight:bold; font-family: 'Lato', sans-serif;"><span>ĐƠN VỊ TÍNH</span></p>
+      </div>
+      <div class="col-sm-8 text-right">
+        <div class="form-group">
+          <button type="button" class="btn btn-success btn-sm" (click)="SerachAction()">
+            <i class="fab fa-searchengin"></i> Tìm kiếm (F1)
+          </button>&nbsp;
+          <button type="button" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus-circle"></i> Thêm mới
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="row">
+          <label class="col-sm-12 control-label">Tìm kiếm</label>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group mb-3 input-group-sm">
+              <input type="text" [(ngModel)]="dataSerach" name="dataSerach" class="form-control" placeholder="Tìm mã/tên">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+<section class="form_content">
+  <div class="table-responsive">
+    <!-- Table  -->
+    <table class="table table-bordered table-striped table-hover">
+      <!-- Table head -->
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Mã ĐVT</th>
+          <th style="width: 20%">Tên đơn vị tính</th>
+          <th style="width: 65%">Ghi chú</th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- Table head -->
+      <!-- Table body -->
+      <tbody>
+        <tr *ngIf="ListUnit.length <= 0">
+          <td colspan="5" class="text-center">Dữ liệu không tồn tại</td>
+        </tr>
+        <tr *ngFor="let row of ListUnit; let i = index">
+          <th>{{i + 1}}</th>
+          <td>{{row.UnitCode}}</td>
+          <td>{{row.UnitName}}</td>
+          <td>{{row.Notes}}</td>
+          <td>
+            <a id="edit_exp"><i class="fas fa-edit" style='color:#337ab7' data-toggle="modal" data-target="#exampleModalCenter"></i></a>&nbsp;&nbsp;&nbsp;
+            <a (click)="openDialog(row.UnitId)"><i class="far fa-trash-alt" style='color:#337ab7'></i></a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+<app-pagination (goPage)="goToPage($event)" (changeLimit)="changeLimit()" (goNext)="onNext()" (goPrev)="onPrev()" [pagesToShow]="5" [page]="page" [perPage]="limit" [count]="total"></app-pagination>
