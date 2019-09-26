@@ -125,6 +125,7 @@
 }
 
 .table-responsive th {
+	font-size: 14px;
     color: #337ab7;
     font-weight: bold;
     text-align: center;
@@ -150,4 +151,8 @@
     font-size: 18px;
     color: #555;
     font-family: inherit;
+}
+
+.modal-body .form_content label{
+  margin-top: 5px;
 }

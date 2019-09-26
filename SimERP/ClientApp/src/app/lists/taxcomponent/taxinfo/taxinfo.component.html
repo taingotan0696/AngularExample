@@ -1,7 +1,7 @@
 <div class="form_content">
     <div class="modal-header" style="font-size: 12">
         <h4 class="modal-title custom-modal-title">{{isAddState?'Thêm mới':'Chỉnh sửa'}}</h4>
-        <button type="button" class="close" aria-label="Close" (click)="activeModal.close(false)">
+        <button type="button" class="close" aria-label="Close" (click)="closeDialog()">
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -9,18 +9,15 @@
         <form [formGroup]="taxForm">
             <div class="row">
                 <label class="col-md-3 text-right">Mã thuế <span class="control-label-require">*</span></label>
-                <input class="col-md-9 form-control" [disabled]="!isAddState" formControlName='TaxCode' [ngClass]="{'is-invalid': taxForm.controls.TaxCode?.hasError('required')
-            && taxForm.controls.TaxCode?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+                <input class="col-md-9 form-control" formControlName='TaxCode' [ngClass]="{'is-invalid': taxForm.controls.TaxCode?.hasError('required') && taxForm.controls.TaxCode?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
             </div>
             <div class="row">
                 <label class="col-md-3 control-label text-right">Tên thuế <span class="control-label-require">*</span></label>
-                <input class="form-control form-control-sm col-md-9" formControlName='TaxName' [ngClass]="{'is-invalid': taxForm.controls.TaxName?.hasError('required')
-            && taxForm.controls.TaxName?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+                <input class="form-control form-control-sm col-md-9" formControlName='TaxName' [ngClass]="{'is-invalid': taxForm.controls.TaxName?.hasError('required') && taxForm.controls.TaxName?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
             </div>
             <div class="row">
                 <label class="col-md-3 control-label text-right">Thuế suất <span class="control-label-require">*</span></label>
-                <input class="form-control col-md-9" formControlName='TaxPercent' type="number" [ngClass]="{'is-invalid': taxForm.controls.TaxPercent?.hasError('required')
-            && taxForm.controls.TaxPercent?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+                <input class="form-control col-md-9" formControlName='TaxPercent' type="number" [ngClass]="{'is-invalid': taxForm.controls.TaxPercent?.hasError('required') && taxForm.controls.TaxPercent?.touched}" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
             </div>
             <div class="row">
                 <label class="col-md-3 control-label text-right">Ghi chú</label>
@@ -29,7 +26,7 @@
             <div class="row">
                 <label class="col-md-3 control-label"></label>
                 <div class="col-md-9">
-                    <mdb-checkbox style="padding-left: 0px" [default]="true" formControlName='IsActive'>Sử dụng</mdb-checkbox>
+                    <mdb-checkbox style="padding-left: 0px" formControlName='IsActive'>Sử dụng</mdb-checkbox>
                 </div>
             </div>
             <div style="display: none">
@@ -40,6 +37,6 @@
     <div class="modal-footer custom-modal-footer">
         <button type="button" class="btn btn-primary" [disabled]="taxForm.invalid" (click)="saveData(false)"><i class="far fa-save"></i> Lưu</button>
         <button type="button" class="btn btn-primary" [disabled]="taxForm.invalid" (click)="saveData(true)"><i class="far fa-save"></i> Lưu & Thêm mới</button>
-        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)"><i class="far fa-window-close"></i> Đóng</button>
+        <button type="button" class="btn btn-outline-dark" (click)="closeDialog()"><i class="far fa-window-close"></i> Đóng</button>
     </div>
 </div>

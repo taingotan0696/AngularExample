@@ -20,9 +20,9 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 import { PurchasemanagementComponent } from './vouchers/purchase/purchasemanagement/purchasemanagement.component';
 import { PurchasedetailinfoComponent } from './vouchers/purchase/purchasedetailinfo/purchasedetailinfo.component';
 import { UnitComponent } from './lists/unitcomponent/unit/unit.component';
-import { ComfirmDialogComponent } from './common/comfirm-dialog/comfirm-dialog.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComfirmDialogComponent } from './common/comfirm-dialog/comfirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -67,14 +67,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgbModule,
     Ng4LoadingSpinnerModule.forRoot(),
     NgbDatepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
   entryComponents:
     [
       TaxinfoComponent,
-      ComfirmDialogComponent,
+      ComfirmDialogComponent
     ],
 
 })

@@ -1,172 +1,172 @@
 <nav id="main-nav">
-    <!-- Sample menu definition -->
-    <ul id="main-menu" class="sm sm-blue">
-        <li><a style="color: white;"><i class="fa fa-home"></i> Trang chủ</a></li>
-        <li>
-            <a style="color: white;"><i class="fa fa-cart-plus"></i> Mua hàng</a>
-            <ul>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/purchase"]' [routerLinkActive]='["purchase"]'>Mua hàng</a>
-                </li>
-                <li><a>Trả hàng</a></li>
-            </ul>
+  <!-- Sample menu definition -->
+  <ul id="main-menu" class="sm sm-blue">
+    <li><a style="color: white;"><i class="fa fa-home"></i> Trang chủ</a></li>
+    <li>
+      <a style="color: white;"><i class="fa fa-cart-plus"></i> Mua hàng</a>
+      <ul>
+        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+          <a [routerLink]='["/purchase"]' [routerLinkActive]='["purchase"]'>Mua hàng</a>
         </li>
-
-        <li>
-            <a style="color: white;"><i class="fa fa-cart-plus"></i> Danh mục</a>
-            <ul>
-                <li>
-                    <a>Danh mục chung</a>
-                    <ul>
-                        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                            <a [routerLink]='["/tax"]' [routerLinkActive]='["tax"]'>Thuế VAT</a>
-                        </li>
-                        <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                            <a [routerLink]='["/unit"]' [routerLinkActive]='["unit"]'>Đơn vị tính</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li>
-            <a style="color: white;"><i class="fa fa-bus"></i> Bán hàng</a>
-            <ul>
-                <li><a>Bán hàng</a></li>
-                <li><a>Trả hàng</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a style="color: white;"><i class="fa fa-university"></i> Kho</a>
-            <ul>
-                <li>
-                    <a>Nhập kho</a>
-                    <ul>
-                        <li><a>Nhập mua hàng</a></li>
-                        <li><a>Nhập trả hàng</a></li>
-                        <li><a>Nhập chuyển kho</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Xuất kho</a>
-                    <ul>
-                        <li><a>Xuất bán hàng</a></li>
-                        <li><a>Xuát trả hàng</a></li>
-                        <li><a>Xuất chuyển kho</a></li>
-                        <li><a>Xuất sử dụng</a></li>
-                        <li><a>Xuất hủy</a></li>
-                    </ul>
-                </li>
-                <li><a>Yêu cầu chuyển kho</a></li>
-                <li><a>Cơ số kho</a></li>
-                <li><a>Kiểm kho</a></li>
-            </ul>
-        </li>
-
-        <li>
-            <a style="color: white;"><i class="fa fa-building"></i> Thu/Chi</a>
-            <ul>
-                <li>
-                    <a>Phiếu thu chi</a>
-                </li>
-                <li>
-                    <a>Phiếu chi hủy dịch vụ</a>
-                </li>
-                <li><a>Phiếu thu</a></li>
-                <li><a>Phiếu chi</a></li>
-                <li>
-                    <a>Chi phí</a>
-                    <ul>
-                        <li><a>Chi phí HĐKD</a></li>
-                        <li><a>CP phân bổ hàng tháng</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li>
-            <a style="color: white;"><i class="fas fa-chart-area"></i> Báo cáo</a>
-            <ul>
-                <li>
-                    <a>Bán hàng</a>
-                    <ul>
-                        <li><a>TH Doanh thu</a></li>
-                        <li><a>TH D.Thu theo HH</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Mua hàng</a>
-                    <ul>
-                        <li><a>Công nợ tổng hợp</a></li>
-                        <li><a>Chi tiết công nợ</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Thu/Chi</a>
-                    <ul>
-                        <li><a>Thu/Chi</a></li>
-                        <li><a>Thu/Chi theo nhân viên</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Phân tích</a>
-                </li>
-                <li>
-                    <a>Kho vật lý</a>
-                    <ul>
-                        <li><a>Thẻ kho</a></li>
-                        <li><a>Nhập xuất tồn</a></li>
-                        <li><a>Nhật ký nhập xuất</a></li>
-                        <li><a>Sử dụng vắc xin</a></li>
-                        <li><a>Kiểm kho nhập</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Kho kế toán</a>
-                    <ul>
-                        <li><a>Bảng giá vốn</a></li>
-                        <li><a>Nhập xuất tồn</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a>Lịch sử</a>
-                    <ul>
-                        <li><a>Nhật ký chứng từ</a></li>
-                        <li><a>Cập nhật chứng từ</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-
-        <li>
-            <a style="color: white;"><i class="fa fa-cog"></i> Hệ thống</a>
-            <ul>
-                <li>
-                    <a>Kỳ kế toán</a>
-                </li>
-                <li>
-                    <a>Misa Export </a>
-                    <ul>
-                        <li><a>Export danh mục</a></li>
-                        <li><a>Mua hàng</a></li>
-                        <li><a>Bán hàng</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </li>
-        <!--<li>
-      <a href="# ">Mega menu</a>
-      <ul class="mega-menu ">
-          <li>
-              <div style="width:400px;max-width:100%; ">
-                  <div style="padding:5px 24px; ">
-                      <p>This is a mega drop down test. Just set the "mega-menu " class to the parent UL element to inform the SmartMenus script. It can contain <strong>any HTML</strong>.</p>
-                      <p>Just style the contents as you like (you may need to reset some SmartMenus inherited styles - e.g. for lists, links, etc.)</p>
-                  </div>
-              </div>
-          </li>
+        <li><a>Trả hàng</a></li>
       </ul>
-  </li>-->
-    </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fa fa-cart-plus"></i> Danh mục</a>
+      <ul>
+        <li>
+          <a>Danh mục chung</a>
+          <ul>
+            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+              <a [routerLink]='["/tax"]' [routerLinkActive]='["tax"]'>Thuế VAT</a>
+            </li>
+            <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+              <a [routerLink]='["/unit"]' [routerLinkActive]='["unit"]'>Đơn vị tính</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fa fa-bus"></i> Bán hàng</a>
+      <ul>
+        <li><a>Bán hàng</a></li>
+        <li><a>Trả hàng</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fa fa-university"></i> Kho</a>
+      <ul>
+        <li>
+          <a>Nhập kho</a>
+          <ul>
+            <li><a>Nhập mua hàng</a></li>
+            <li><a>Nhập trả hàng</a></li>
+            <li><a>Nhập chuyển kho</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Xuất kho</a>
+          <ul>
+            <li><a>Xuất bán hàng</a></li>
+            <li><a>Xuát trả hàng</a></li>
+            <li><a>Xuất chuyển kho</a></li>
+            <li><a>Xuất sử dụng</a></li>
+            <li><a>Xuất hủy</a></li>
+          </ul>
+        </li>
+        <li><a>Yêu cầu chuyển kho</a></li>
+        <li><a>Cơ số kho</a></li>
+        <li><a>Kiểm kho</a></li>
+      </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fa fa-building"></i> Thu/Chi</a>
+      <ul>
+        <li>
+          <a>Phiếu thu chi</a>
+        </li>
+        <li>
+          <a>Phiếu chi hủy dịch vụ</a>
+        </li>
+        <li><a>Phiếu thu</a></li>
+        <li><a>Phiếu chi</a></li>
+        <li>
+          <a>Chi phí</a>
+          <ul>
+            <li><a>Chi phí HĐKD</a></li>
+            <li><a>CP phân bổ hàng tháng</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fas fa-chart-area"></i> Báo cáo</a>
+      <ul>
+        <li>
+          <a>Bán hàng</a>
+          <ul>
+            <li><a>TH Doanh thu</a></li>
+            <li><a>TH D.Thu theo HH</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Mua hàng</a>
+          <ul>
+            <li><a>Công nợ tổng hợp</a></li>
+            <li><a>Chi tiết công nợ</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Thu/Chi</a>
+          <ul>
+            <li><a>Thu/Chi</a></li>
+            <li><a>Thu/Chi theo nhân viên</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Phân tích</a>
+        </li>
+        <li>
+          <a>Kho vật lý</a>
+          <ul>
+            <li><a>Thẻ kho</a></li>
+            <li><a>Nhập xuất tồn</a></li>
+            <li><a>Nhật ký nhập xuất</a></li>
+            <li><a>Sử dụng vắc xin</a></li>
+            <li><a>Kiểm kho nhập</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Kho kế toán</a>
+          <ul>
+            <li><a>Bảng giá vốn</a></li>
+            <li><a>Nhập xuất tồn</a></li>
+          </ul>
+        </li>
+        <li>
+          <a>Lịch sử</a>
+          <ul>
+            <li><a>Nhật ký chứng từ</a></li>
+            <li><a>Cập nhật chứng từ</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a style="color: white;"><i class="fa fa-cog"></i> Hệ thống</a>
+      <ul>
+        <li>
+          <a>Kỳ kế toán</a>
+        </li>
+        <li>
+          <a>Misa Export </a>
+          <ul>
+            <li><a>Export danh mục</a></li>
+            <li><a>Mua hàng</a></li>
+            <li><a>Bán hàng</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <!--<li>
+        <a href="# ">Mega menu</a>
+        <ul class="mega-menu ">
+            <li>
+                <div style="width:400px;max-width:100%; ">
+                    <div style="padding:5px 24px; ">
+                        <p>This is a mega drop down test. Just set the "mega-menu " class to the parent UL element to inform the SmartMenus script. It can contain <strong>any HTML</strong>.</p>
+                        <p>Just style the contents as you like (you may need to reset some SmartMenus inherited styles - e.g. for lists, links, etc.)</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </li>-->
+  </ul>
 </nav>

@@ -112,7 +112,7 @@ export class TaxComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openDialog(rowSelected: any) {
+  openDialog(rowSelected?: any) {
     const modalRef = this.modalService.open(TaxinfoComponent, {
       backdrop: false, scrollable: true
     });
