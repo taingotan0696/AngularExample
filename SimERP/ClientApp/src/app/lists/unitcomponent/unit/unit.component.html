@@ -50,7 +50,7 @@
       <!-- Table body -->
       <tbody>
         <tr *ngIf="ListUnit.length <= 0">
-          <td colspan="5" class="text-center">Dữ liệu không tồn tại</td>
+          <td colspan="6" class="text-center">Dữ liệu không tồn tại</td>
         </tr>
         <tr *ngFor="let row of ListUnit; let i = index">
           <th>{{i + 1}}</th>
@@ -89,13 +89,13 @@
           <div class="row">
             <div class="col-sm-3 text-right"><label control-label>Mã ĐVT</label> <label class="control-label-require">*</label></div>
             <div class="col-sm-9">
-              <input type="text" [(ngModel)]="objModel.UnitCode" class="form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+              <input type="text" [ngClass]="{'textvalidate': objModel.UnitCode.length <= 0}" [(ngModel)]="objModel.UnitCode" class="form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
             </div>
           </div>
           <div class="row">
             <div class="col-sm-3 text-right"><label control-label>Tên đơn vị tính</label> <label class="control-label-require">*</label></div>
             <div class="col-sm-9">
-              <input type="text" [(ngModel)]="objModel.UnitName" class="form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
+              <input type="text" [ngClass]="{'textvalidate': objModel.UnitName.length <= 0}" [(ngModel)]="objModel.UnitName" class="form-control form-control-sm" style="box-shadow: none; border-top: none; border-left: none; border-right: none">
             </div>
           </div>
           <div class="row">
@@ -104,15 +104,24 @@
               <textarea type="text" [(ngModel)]="objModel.Notes" class="form-control form-control-sm" rows="2" style="box-shadow: none; border-top: none; border-left: none; border-right: none"></textarea>
             </div>
           </div>
+          <div class="row">
+            <div class="col-sm-3 text-right"><label control-label></label></div>
+            <div class="col-sm-9">
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" [(ngModel)]="objModel.IsActive" name="example1">
+                <label class="custom-control-label" for="customCheck">Sử dụng</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-info btn-sm" (click)="saveDataModel(true, true)">
+      <div class="modal-footer" [ngClass]="{'wrapper': (objModel.UnitCode.length <= 0 || objModel.UnitName.length <= 0)}">
+        <button type="button" [ngClass]="{'pointer-events-none': (objModel.UnitCode.length <= 0 || objModel.UnitName.length <= 0)}" class="btn btn-info btn-sm" (click)="saveDataModel(true)">
           <i class="far fa-save"></i> Lưu(F3)
         </button>&nbsp;
-        <button type="button" class="btn btn-info btn-sm" (click)="saveDataModel(false, true)">
+        <button type="button" [ngClass]="{'pointer-events-none': (objModel.UnitCode.length <= 0 || objModel.UnitName.length <= 0)}" class="btn btn-info btn-sm" (click)="saveDataModel(false)">
           <i class="far fa-save"></i> Lưu & Thêm mới
         </button>&nbsp;
         <button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal" #closeAddExpenseModal>Đóng</button>

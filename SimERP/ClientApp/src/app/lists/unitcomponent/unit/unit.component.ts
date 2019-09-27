@@ -166,7 +166,7 @@ export class UnitComponent implements OnInit {
 
   EditModel(index: number) {
     this.isNewModel = false;
-    this.objModel.UnitId = this.ListUnit[index].UnitId;
+    this.objModel = this.ListUnit[index];
     this.objModel.UnitCode = this.ListUnit[index].UnitCode;
     this.objModel.UnitName = this.ListUnit[index].UnitName;
     this.objModel.Notes = this.ListUnit[index].Notes;

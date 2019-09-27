@@ -9,3 +9,15 @@
 .modal-content {
   width: 75%;
 }
+
+.textvalidate{
+  border-color: red;
+}
+
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.wrapper {
+  cursor: not-allowed;
+}
