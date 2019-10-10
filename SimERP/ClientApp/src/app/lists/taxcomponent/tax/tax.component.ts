@@ -1,35 +1,60 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ChangeDetectorRef, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { TaxService } from '../services.service';
+import { TaxService } from '../tax.service';
 import { Tax } from '../models/Tax';
-import { PaginationComponent } from 'src/app/pagination/pagination.component';
-import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TaxinfoComponent } from '../taxinfo/taxinfo.component';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import { DelTaxParams } from '../models/DelTaxParams';
+import { ToastrService } from 'ngx-toastr';
+import { PaginationComponent } from '../../../pagination/pagination.component';
+import { ComfirmDialogComponent } from '../../../common/comfirm-dialog/comfirm-dialog.component';
+import { AuthenService } from '../../../systems/authen.service';
+import { User } from '../../../systems/user';
 
 @Component({
-  selector: 'app-stock',
+  selector: 'app-tax',
   templateUrl: './tax.component.html',
-  styleUrls: ['./tax.component.css']
+  styleUrls: ['./tax.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TaxComponent implements OnInit, AfterViewInit {
 
   formSearch: FormGroup;
-  headElements = ['#', 'Mã', 'Tên thuế', 'Thuế suất', 'Ghi chú', 'Sử dụng', ''];
   @ViewChild(PaginationComponent, { static: true }) pagingComponent: PaginationComponent;
-  taxList: Tax[];
+  lstDataResult: Tax[];
   loading = false;
   total = 10;
   page = 1;
   limit = 10;
+  isDataAvailable = false;
 
-  constructor(private cdRef: ChangeDetectorRef, private stockService: TaxService, private modalService: NgbModal, private spinnerService: Ng4LoadingSpinnerService) {
+  public autocompleteHeaderTemplate = `
+  <div class="header-row">
+  <div class="col-3">Mã thuế</div>
+  <div class="col-3">Tên thuế</div>
+  </div>`;
+
+  private sessionUser: User;
+
+  constructor(private taxService: TaxService, private modalService: NgbModal, private spinnerService: Ng4LoadingSpinnerService,
+    private toastr: ToastrService, private authenService: AuthenService) {
+    this.authenService.currentUser.subscribe(x => {
+      this.sessionUser = x;
+    });
+  }
+
+  public renderDataRowAutoComplete(data: Tax): string {
+    const html = `
+      <div class="data-row">
+        <div class="col-3">${data.TaxCode}</div>
+        <div class="col-3">${data.TaxName}</div>
+      </div>`;
+    return html;
   }
 
   ngOnInit() {
     this.formSearch = new FormGroup({
-      searchString: new FormControl(),
+      SearchString: new FormControl(),
     });
   }
 
@@ -74,18 +99,23 @@ export class TaxComponent implements OnInit, AfterViewInit {
   LoadData(startRow: number) {
     const limit = this.pagingComponent.getLimit();
     this.spinnerService.show();
-    this.stockService.getData(this.formSearch.getRawValue().searchString, startRow, limit).subscribe(
+    this.taxService.getData(this.formSearch.getRawValue().SearchString, startRow, limit).subscribe(
       {
         next: (res) => {
           if (!res.IsOk) {
-            alert('Lỗi ' + res.MessageText);;
+            this.toastr.error(res.MessageText);
+            this.lstDataResult = [];
+            this.total = 0;
+            this.isDataAvailable = false;
           } else {
-            this.taxList = res.RepData;
+            this.lstDataResult = res.RepData;
             this.total = res.TotalRow;
+            this.isDataAvailable = this.total > 0 ? true : false;
           }
         },
         error: (err) => {
-          console.log(err);
+          this.toastr.error('Lỗi tìm kiếm thông tin!');
+          this.isDataAvailable = false;
         },
         complete: () => {
           this.spinnerService.hide();
@@ -93,31 +123,36 @@ export class TaxComponent implements OnInit, AfterViewInit {
       }
     );
   }
-  Delete(taxData) {
-    if (confirm('Bạn có chắc chắn muốn xoá dữ liệu đang chọn?')) {
-      this.stockService.DeleteTax(taxData).subscribe(res => {
-        if (res !== undefined) {
-          if (!res.IsOk) {
-            alert(res.MessageText);
-          } else {
-            alert('Xoá thành công!');
-            this.SearchData();
-          }
-        } else {
-          alert('Lỗi xoá thông tin');
-        }
-      }, err => {
-        console.log(err);
-      });
+
+  onKeydown(event) {
+    if (event.key === 'Enter') {
+      this.SearchData();
     }
+  }
+
+  deleteTax(taxData) {
+    this.taxService.DeleteTax(taxData).subscribe(res => {
+      if (res !== undefined) {
+        if (!res.IsOk) {
+          this.toastr.info('Xoá thất bại!');
+        } else {
+          this.toastr.success('Xoá thành công!');
+          this.SearchData();
+        }
+      } else {
+        this.toastr.error('Lỗi xoá thông tin!');
+      }
+    }, err => {
+      this.toastr.error('Lỗi xoá thông tin!');
+    });
   }
 
   openDialog(rowSelected?: any) {
     const modalRef = this.modalService.open(TaxinfoComponent, {
-      backdrop: false, scrollable: true
+      backdrop: 'static', scrollable: true, centered: true, backdropClass: 'backdrop-modal'
     });
 
-    if (rowSelected == undefined) {
+    if (rowSelected === undefined) {
       modalRef.componentInstance.isAddState = true;
     } else {
       modalRef.componentInstance.rowSelected = rowSelected;
@@ -127,9 +162,55 @@ export class TaxComponent implements OnInit, AfterViewInit {
     // xử lý sau khi đóng dialog, thực hiện load lại dữ liệu nếu muốn
     modalRef.result.then((result) => {
       if (result != undefined && result == true) {
-        this.SearchData();
+        const startRow = this.getStartRow();
+        this.LoadData(startRow);
       }
     }, (reason) => {
+
+    });
+  }
+
+  autocompleteCallback(event) {
+    console.log(event);
+  }
+
+  showConfirmDeleteDialog(taxData) {
+    const modalRef = this.modalService.open(ComfirmDialogComponent, {
+      backdrop: false, scrollable: true, centered: true
+    });
+
+    modalRef.result.then((result) => {
+      if (result != undefined && result == true) {
+        this.deleteTax(taxData);
+      }
+    });
+  }
+
+  moveUp(index) {
+    console.log('moveUp');
+    const upID = this.lstDataResult[index].TaxId;
+    const downID = this.lstDataResult[index - 1].TaxId;
+    this.taxService.UpdateSortOrderTax(upID, downID).subscribe(res => {
+      if (res == undefined || !res.IsOk) {
+        this.toastr.error('Lỗi cập nhật Sort Order!');
+      } else {
+        const startRow = this.getStartRow();
+        this.LoadData(startRow);
+      }
+    });
+  }
+
+  moveDown(index) {
+    console.log('moveDown');
+    const downID = this.lstDataResult[index].TaxId;
+    const upID = this.lstDataResult[index + 1].TaxId;
+    this.taxService.UpdateSortOrderTax(upID, downID).subscribe(res => {
+      if (res == undefined || !res.IsOk) {
+        this.toastr.error('Lỗi cập nhật Sort Order!');
+      } else {
+        const startRow = this.getStartRow();
+        this.LoadData(startRow);
+      }
     });
   }
 }

@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class UnitComponent implements OnInit {
 
   dataSerach: string;
-  ListUnit: Unit[] = [];
+  lstDataResult: Unit[] = [];
   objModel: Unit;
   isNewModel: boolean;
 
@@ -78,7 +78,7 @@ export class UnitComponent implements OnInit {
           if (!res.IsOk) {
             alert('Lỗi ' + res.MessageText);;
           } else {
-            this.ListUnit = res.RepData;
+            this.lstDataResult = res.RepData;
             this.total = res.TotalRow;
           }
         },
@@ -98,8 +98,8 @@ export class UnitComponent implements OnInit {
 
   actionUp(index: number) {
     if (index == 0) return;
-    var objcusr: number = this.ListUnit[index].UnitId;
-    var objUp: number = this.ListUnit[index - 1].UnitId;
+    var objcusr: number = this.lstDataResult[index].UnitId;
+    var objUp: number = this.lstDataResult[index - 1].UnitId;
 
     this.UnitService.SortUnit(objcusr, objUp).subscribe(res => {
       if (res !== undefined) {
@@ -118,10 +118,10 @@ export class UnitComponent implements OnInit {
   }
 
   actionDow(index: number) {
-    if (index == this.limit - 1) return;
+    if (index == this.lstDataResult.length - 1) return;
 
-    var objcusr: number = this.ListUnit[index].UnitId;
-    var objDow: number = this.ListUnit[index + 1].UnitId;
+    var objcusr: number = this.lstDataResult[index].UnitId;
+    var objDow: number = this.lstDataResult[index + 1].UnitId;
    
     this.UnitService.SortUnit(objDow, objcusr).subscribe(res => {
       if (res !== undefined) {
@@ -166,10 +166,11 @@ export class UnitComponent implements OnInit {
 
   EditModel(index: number) {
     this.isNewModel = false;
-    this.objModel = this.ListUnit[index];
-    this.objModel.UnitCode = this.ListUnit[index].UnitCode;
-    this.objModel.UnitName = this.ListUnit[index].UnitName;
-    this.objModel.Notes = this.ListUnit[index].Notes;
+    this.objModel = this.lstDataResult[index];
+    this.objModel.UnitCode = this.lstDataResult[index].UnitCode;
+    this.objModel.UnitName = this.lstDataResult[index].UnitName;
+    this.objModel.Notes = this.lstDataResult[index].Notes;
+    this.objModel.IsActive = this.lstDataResult[index].IsActive;
   }
 
   getStartRow(): number {

@@ -3,6 +3,7 @@
     position: relative;
 }
 .container {
+	margin-top: 7%;
     z-index: 1;
     width: 100%;
     background-color: transparent;
@@ -11,17 +12,50 @@
 
 .main_header {
     width: 100%;
-    z-index: 999;
+    z-index: 900;
     position: fixed;
     top: 0px;
 }
 
+.header_content {
+	position: fixed;
+	width: 100%;
+    background-color: white;
+	margin-top: -25px;
+}
+
 /* ------------------Form-------------------- */
 
+.main_content {
+	padding-top: 8%;
+}
+.header_content .form_content{
+	padding-bottom: 0px;
+	padding-top: 15px;
+	
+}
+
+.header_content .form_content .breadcrumb{
+	margin:0;
+	padding: 0;
+	background-color: white;
+}
+.header_content .form_content .breadcrumb-item.active {
+    color: #6c757d;
+	font-size: 14px;
+}
 .form_content {
     width: 100%;
     padding: 20px;
+	padding-top: 0px;
     font-size: 12px;
+}
+
+.form_content .form-control {
+    height: 25px;
+    padding: 4px 10px;
+    border-width: 0.5px;
+	font-size: 12px;
 }
 
 .form_content .btn-outline-secondary {
@@ -113,7 +147,6 @@
 
 .table-responsive {
     min-height: .01%;
-    overflow-x: auto;
     line-height: 10px;
     background-color: transparent;
     border-spacing: 0;
@@ -121,27 +154,97 @@
     font-family: 'Lato', sans-serif;
     color: #555;
     text-align: center;
-    padding: 5px;
+	max-height:400px;
+	
 }
 
-.table-responsive th {
-	font-size: 14px;
+.table-responsive table th {
     color: #337ab7;
-    font-weight: bold;
     text-align: center;
     vertical-align: middle;
+	padding: 5px;
 }
 
-.table-responsive td {
+.table-responsive tbody td {
     font-size: 12px;
-    vertical-align: inherit;
-    padding: 5px;
+	padding: 0 0 0 5px;
+	vertical-align: middle !important;
+}
+
+.table-responsive tbody a{
+    font-size: 12px;
+	font-family: 'Lato', sans-serif;
+}
+
+
+.table-responsive table > tbody > tr > td, .table-responsive table tfoot > tr > td {
+    white-space: nowrap;
+}
+
+.table-responsive table .order-number {
+    width: 38px;
+    min-width: 38px;
+    text-align: center;
+}
+
+.table-responsive table .col-code {
+    text-decoration: none;
+	color: #337ab7;
+	min-width: 100px;
+}
+
+.table-responsive table .col-code a {
+    cursor:pointer;
+}
+
+.table-responsive table .col-name {
+    min-width: 300px; 
+	text-align: left
+}
+
+.table-responsive table .col-note {
+    min-width: 300px; 
+	text-align: left
+}
+
+.table-responsive table .col-active {
+    min-width: 100px;
+	width: 100px;
+}
+
+.table-responsive table .col-sortorder {
+    min-width: 120px;
+	width: 120px;
+}
+
+.table-responsive table .col-action {
+    min-width: 80px;
+	width: 80px;
+}
+
+.table-responsive table .col-action a {
+    cursor: pointer;
+}
+
+.table-responsive table .col-moveaction {
+	cursor:pointer; 
+	
+}
+
+.table-responsive table .datarow-null {
+    text-align:left;
+	padding: 10px;
+	font-style: italic;
 }
 
 .table-bordered {
     border-color: #e3e3e3;
     border: 1px solid #ddd;
 }
+.table thead th {
+    border-bottom: none !important;
+}
+
 
 /* ------------------Modal-------------------- */
 
@@ -155,4 +258,73 @@
 
 .modal-body .form_content label{
   margin-top: 5px;
+}
+
+.modal-body .form_content .form-control {
+    border-radius: 0;
+	box-shadow: none; 
+	border-top: none; 
+	border-left: none; 
+	border-right: none
+}
+
+.modal-content .form_content .form-control {
+    border-radius: 0;
+	box-shadow: none; 
+	border-top: none; 
+	border-left: none; 
+	border-right: none
+}
+.modal-body .form_content .form-control-sm {
+    border-radius: 0;
+}
+
+/*---------------Validate----------------*/
+.pointer-events-none {
+  pointer-events: none;
+}
+
+.wrapper {
+  cursor: not-allowed;
+}
+.is-invalid {
+  border-color: brown;
+}
+/*---------------Responsive-----------*/
+@media screen and (max-width: 768px) {
+	.supperbody {
+        margin-top: 15%;
+        position: relative;
+    }
+	.main_content {
+		padding-top: 12%;
+	}
+}
+
+@media (min-width: 1024px) {
+    .supperbody {
+        margin-top: 10%;
+        position: relative;
+    }
+	.main_content {
+		padding-top: 12%;
+	}
+}
+
+@media (min-width: 1440px) {
+    .supperbody {
+        margin-top: 7%;
+        position: relative;
+    }
+	
+	.main_content {
+		padding-top: 8%;
+	}
+}
+
+@media (min-width: 2000px) {
+    .supperbody {
+        margin-top: 5%;
+        position: relative;
+    }
 }

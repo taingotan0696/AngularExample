@@ -40,21 +40,10 @@
     border: 1px solid #ddd;
 }
 
-a {
-    color: red;
-    font-family: helvetica;
-    text-decoration: none;
-    text-transform: uppercase;
-}
-
 a:hover {
     text-decoration: underline;
 }
 
 a:active {
     color: black;
-}
-
-a:visited {
-    color: purple;
 }

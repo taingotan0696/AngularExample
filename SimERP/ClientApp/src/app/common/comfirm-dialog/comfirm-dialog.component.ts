@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -8,7 +8,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ComfirmDialogComponent implements OnInit {
 
-  constructor(public activeModal: NgbActiveModal) {}
+  @Input() contentMessage: string;
+  constructor(public activeModal: NgbActiveModal) {
+    if (this.contentMessage == null || this.contentMessage == "" || this.contentMessage == undefined) {
+      this.contentMessage = "Bạn có muốn xóa dữ liệu không?";
+    }
+  }
 
   ngOnInit() {
   }

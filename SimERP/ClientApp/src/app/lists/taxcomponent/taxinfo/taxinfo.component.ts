@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TaxService } from '../services.service';
-import { Tax } from '../models/Tax';
+import {Component, OnInit, Input} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {TaxService} from '../tax.service';
+import {Tax} from '../models/Tax';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-taxinfo',
@@ -17,15 +18,17 @@ export class TaxinfoComponent implements OnInit {
   tax: Tax; // đối tượng lưu trữ tạm ở component này
   resultCloseDialog = false; // biến xác định khi close dialog, khi trở về màn hình danh sách có cần load lại danh sách hay không
 
-  constructor(public activeModal: NgbActiveModal, private taxService: TaxService) { }
+  constructor(public activeModal: NgbActiveModal, private taxService: TaxService, private toastr: ToastrService) {
+
+  }
 
   ngOnInit() {
     // khởi tạo các control nghiệp vụ
     this.taxForm = new FormGroup({
       TaxCode: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-      TaxName: new FormControl('', [Validators.required, Validators.maxLength(125)]),
-      TaxPercent: new FormControl(0, [Validators.required, Validators.maxLength(50)]),
-      Notes: new FormControl(''),
+      TaxName: new FormControl('', [Validators.required, Validators.maxLength(250)]),
+      TaxPercent: new FormControl(0, [Validators.required, Validators.maxLength(50), Validators.min(0), Validators.max(100)]),
+      Notes: new FormControl('', [Validators.maxLength(500)]),
       TaxId: new FormControl(0), // default value
       IsActive: new FormControl(true),
     });
@@ -55,11 +58,19 @@ export class TaxinfoComponent implements OnInit {
   saveData(isContinue: boolean) {
     const isNew = this.isAddState;
     this.tax = Object.assign({}, this.taxForm.getRawValue());
-    if (this.tax != undefined) {
+    if (this.tax !== undefined) {
+      if (isNew) {
+        this.tax.CreatedDate = new Date();
+      } else {
+        this.tax.ModifyDate = new Date();
+        this.tax.CreatedDate = this.rowSelected.CreatedDate;
+        this.tax.CreatedBy = this.rowSelected.CreatedBy;
+        this.tax.SortOrder = this.rowSelected.SortOrder;
+      }
       this.taxService.SaveTax(this.tax, isNew).subscribe(res => {
-        if (res != undefined) {
+        if (res !== undefined) {
           if (res.IsOk) {
-            alert(this.getActionText() + ' thành công');
+            this.toastr.success(this.getActionText() + ' thành công');
             this.resultCloseDialog = true;
             if (isContinue) {
               this.isAddState = true;
@@ -69,10 +80,11 @@ export class TaxinfoComponent implements OnInit {
               this.closeDialog();
             }
           } else {
-            alert(this.getActionText() + ' thất bại. Lỗi: ' + res.MessageCode + '\r\n' + res.MessageText);
+            this.toastr.error(this.getActionText() + ' thất bại. ' + res.MessageText);
+            console.log(res);
           }
         } else {
-          alert(this.getActionText() + ' thất bại');
+          this.toastr.error(this.getActionText() + ' thất bại');
         }
       });
     }

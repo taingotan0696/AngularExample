@@ -7,12 +7,13 @@ import { ReqListDelete } from '../../common/commomodel/ReqListDelete';
 import { Unit } from './model/Unit';
 import { ReqListAdd } from '../../common/commomodel/ReqListAdd';
 import { ReqListUpdateSortOrder } from '../../common/commomodel/ReqListUpdateSortOrder';
+import { ROOT_URL } from '../../common/config/APIURLconfig';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UnitService {
-  
+
   AuthenParams = new AuthenParams();
   UnitSearchParams = new ReqListSearch();
   DelUnitParams = new ReqListDelete();
@@ -22,7 +23,7 @@ export class UnitService {
   constructor(private httpClient: HttpClient) { }
 
   getData(searchString?: string, startRow?: number, maxRow?: number) {
-    
+
     this.AuthenParams.Sign = 'tai.ngo';
     this.UnitSearchParams.AuthenParams = this.AuthenParams;
     this.UnitSearchParams.MaxRow = maxRow;
@@ -31,7 +32,7 @@ export class UnitService {
 
     const jsonString = JSON.stringify(this.UnitSearchParams);
     const headers = new HttpHeaders().set('content-type', 'application/json');
-    return this.httpClient.post<ResponeResult>('https://localhost:44335/api/list/unit', jsonString, { headers });
+    return this.httpClient.post<ResponeResult>(ROOT_URL + 'api/list/unit', jsonString, { headers });
   }
 
   DeleteUnit(UnitCode: any) {
@@ -41,7 +42,7 @@ export class UnitService {
     this.DelUnitParams.AuthenParams = this.AuthenParams;
     this.DelUnitParams.ID = UnitCode;
     const jsonString = JSON.stringify(this.DelUnitParams);
-    return this.httpClient.post<ResponeResult>('https://localhost:44335/api/list/DeleteUnit', jsonString, { headers });
+    return this.httpClient.post<ResponeResult>(ROOT_URL + 'api/list/DeleteUnit', jsonString, { headers });
   }
 
   InsertUnit(objUnit: Unit, isNew: boolean) {
@@ -53,7 +54,7 @@ export class UnitService {
     this.InsertUnitParams.IsNew = isNew;
 
     const jsonString = JSON.stringify(this.InsertUnitParams);
-    return this.httpClient.post<ResponeResult>('https://localhost:44335/api/list/saveunit', jsonString, { headers });
+    return this.httpClient.post<ResponeResult>(ROOT_URL + 'api/list/saveunit', jsonString, { headers });
   }
 
   SortUnit(UpID: number, DowID: number) {
@@ -65,6 +66,6 @@ export class UnitService {
     this.ReqListUpdateSortOrder.DownID = DowID;
 
     const jsonString = JSON.stringify(this.ReqListUpdateSortOrder);
-    return this.httpClient.post<ResponeResult>('https://localhost:44335/api/list/updateSortOrderUnit', jsonString, { headers });
+    return this.httpClient.post<ResponeResult>(ROOT_URL + 'api/list/updateSortOrderUnit', jsonString, { headers });
   }
 }
