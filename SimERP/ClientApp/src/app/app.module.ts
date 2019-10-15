@@ -41,6 +41,7 @@ import {CookieService} from 'ngx-cookie-service';
 import { CheckpermissionDirective } from './common/checkpermission/checkpermission.directive';
 import { PagelistComponent } from './lists/pagelist/pagelist/pagelist.component';
 import { ProductCategoryComponent } from './lists/productcategory/product-category/product-category.component';
+import { CustomerComponent } from './lists/customer/customer/customer.component';
 
 
 export function tokenGetter() {
@@ -76,7 +77,8 @@ export function tokenGetter() {
     LoadingComponent,
     CheckpermissionDirective,
     PagelistComponent,
-    ProductCategoryComponent
+    ProductCategoryComponent,
+    CustomerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

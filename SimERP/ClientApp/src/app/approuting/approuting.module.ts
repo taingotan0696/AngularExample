@@ -17,6 +17,7 @@ import { LogoutComponent } from '../systems/logout/logout.component';
 import { FirstchangepasswordComponent } from '../systems/firstchangepassword/firstchangepassword.component';
 import { PagelistComponent } from '../lists/pagelist/pagelist/pagelist.component';
 import { ProductCategoryComponent } from '../lists/productcategory/product-category/product-category.component';
+import { CustomerComponent } from '../lists/customer/customer/customer.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'user', component: UserComponent },
       { path: 'pagelist', component: PagelistComponent },
       { path: 'productcategory', component: ProductCategoryComponent },
+      { path: 'customer', component: CustomerComponent },
     ]
   },
   {
